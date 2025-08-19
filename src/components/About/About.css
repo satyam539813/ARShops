@@ -1,0 +1,38 @@
+.about-page{padding-top:96px}
+.about-hero{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:64px 20px}
+.about-hero__inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+.about-hero__content{text-align:left}
+.about-hero h1{font-size:2.5rem;margin-bottom:12px}
+.about-hero p{opacity:.9;line-height:1.65}
+.about-cta{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
+.about-btn{display:inline-block;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;transition:.2s ease}
+.about-btn.primary{background:#22c55e;color:#0b1220}
+.about-btn.primary:hover{background:#16a34a;transform:translateY(-1px)}
+.about-btn.secondary{background:#0b1220;color:#e2e8f0;border:1px solid #334155}
+.about-btn.secondary:hover{background:#111827;transform:translateY(-1px)}
+.about-hero__art{width:100%;height:320px;max-width:520px;justify-self:center}
+
+.about-grid{max-width:1100px;margin:32px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0 16px}
+.about-card{background:#0b1220;border:1px solid #1f2937;border-radius:12px;padding:18px;color:#e5e7eb}
+.about-card h3{margin:0 0 8px 0}
+.about-card ul{margin:0;padding-left:18px}
+
+.about-team{max-width:1100px;margin:16px auto;padding:0 16px}
+.team-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.team-card{display:flex;gap:12px;align-items:center;background:#0b1220;border:1px solid #1f2937;border-radius:12px;padding:14px;color:#e5e7eb}
+.avatar{width:40px;height:40px;border-radius:50%;background:#334155;color:#e5e7eb;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+.about-faq{max-width:900px;margin:24px auto;padding:0 16px}
+.about-faq details{background:#0b1220;border:1px solid #1f2937;border-radius:10px;padding:12px;color:#e5e7eb;margin-bottom:10px}
+.about-faq summary{cursor:pointer;font-weight:600}
+
+.about-footer-cta{max-width:900px;margin:28px auto 64px auto;text-align:center;padding:0 16px}
+
+@media (max-width:900px){
+  .about-hero__inner{grid-template-columns:1fr;text-align:center}
+  .about-hero__content{text-align:center}
+  .about-cta{justify-content:center}
+  .about-hero__art{height:260px}
+  .about-grid{grid-template-columns:1fr}
+  .team-list{grid-template-columns:1fr}
+}
