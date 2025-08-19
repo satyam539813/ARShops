@@ -38,6 +38,13 @@
   background: var(--primary);
 }
 
+/* Lottie brand accent container keeps layout stable */
+.brand-anim {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+}
+
 .footer-section h4 {
   font-size: 1.25rem;
   font-weight: 600;

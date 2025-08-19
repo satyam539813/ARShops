@@ -11,19 +11,23 @@ function Footer() {
     <div className="footer-container">
       <div className="footer-content">
         <div className="footer-section">
-          <h3>AR Shopsy</h3>
+          <h3 style={{display:'flex',alignItems:'center',gap:'8px'}}>AR Shopsy
+            <span aria-hidden="true" className="brand-anim">
+              <lottie-player src="https://lottie.host/0f3118b8-6b78-4c2d-9a3b-6df2bf1e0b9a/4i5m9r0u8Q.json" background="transparent" speed="1" loop autoplay style={{width:'28px',height:'28px'}}></lottie-player>
+            </span>
+          </h3>
           <p>Experience shopping in a whole new dimension with our augmented reality platform.</p>
           <div className="social-icons">
-            <a href="#" className="social-icon">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon">
               <FaTwitter />
             </a>
-            <a href="#" className="social-icon">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">
               <FaFacebook />
             </a>
-            <a href="#" className="social-icon">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">
               <FaInstagram />
             </a>
-            <a href="#" className="social-icon">
+            <a href="https://github.com/Shivang-v-erm-a/Major-Project" target="_blank" rel="noopener noreferrer" className="social-icon">
               <FaGithub />
             </a>
           </div>

@@ -3,8 +3,7 @@ import "@google/model-viewer/dist/model-viewer.min.js";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./components/Home/Home";
 import ProductList from "./components/ProductList/ProductList";
-import About from "./components/About/About";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
+ import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
@@ -12,6 +11,7 @@ import Feedback from "./components/Feedback/Feedback";
 import SignUp from "./components/SignUp/SignUp";
 import SignIn from "./components/SignIn/Signin";
 import WishList from "./components/Wishlist/WishList";
+import About from "./components/About/About";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -74,9 +74,9 @@ const App = () => {
               <WishList wishlist={wishlist} onRemoveItem={handleRemoveItem} />
             }
           />
-          <Route path="/about" element={<About />} />
-          <Route path="/feedback" element={<Feedback />} />
+           <Route path="/feedback" element={<Feedback />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />

@@ -1,145 +1,89 @@
-/* LandingPage.css - Fixed version */
-/* General Layout */
-.landing-page {
-  width: 100%;
-  height: 90vh;
-  background-color: #f8f9ff; /* Light background */
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+/* LandingPage.css */
+.landing-page.white-blue-theme {
+    background-color: #ffffff;
+    color: #2a4b8d;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', 'Arial', sans-serif;
 }
 
-/* Text Structure */
+.hero-container {
+    text-align: center;
+    max-width: 1200px;
+    padding: 2rem;
+}
+
 .text-structure {
-  margin-top: 2rem;
-  padding: 0 5rem;
+    margin-bottom: 3rem;
 }
 
 .masker {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .text-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.highlight-bar {
-  z-index: 1000;
-  height: 13vh;
-  background-image: url(https://cdn-icons-png.flaticon.com/512/3144/3144456.png); /* New reliable cart icon */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 0.25rem;
-  position: relative;
-  margin-right: 1rem;
+    display: inline-block;
 }
 
 .text-item {
-  margin-right: 40px;
-  font-size: 8vw;
-  line-height: 8vw;
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-top: -1.2rem;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.03em;
-  white-space: nowrap; /* Prevent text from wrapping */
-  max-width: 90%; /* Ensure it doesn't overflow */
-  text-align: center; /* Center text */
-  color: #27272A; /* Dark text for better visibility */
-  position: relative;
-  z-index: 10;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Slight shadow for better readability */
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.1;
+    color: #2a4b8d;
 }
 
-/* CTA Button */
-.cta-button {
-  margin-top: 3rem;
-  padding: 1rem 2.5rem;
-  background: #6366f1; /* Indigo color */
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.cta-button.blue-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #2a4b8d;
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    border: 2px solid #2a4b8d;
+    box-shadow: 0 4px 12px rgba(42, 75, 141, 0.2);
 }
 
-.cta-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
-  background: #4f46e5;
+.cta-button.blue-btn:hover {
+    background-color: white;
+    color: #2a4b8d;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(42, 75, 141, 0.3);
 }
 
-.cta-button span {
-  display: inline-block;
-  transition: transform 0.3s ease;
+.arrow {
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
 }
 
-.cta-button:hover span {
-  transform: translateX(5px);
+.cta-button.blue-btn:hover .arrow {
+    transform: translateX(4px);
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .text-structure {
-    margin-top: 6rem;
-    padding: 0 3rem;
-  }
-
-  .highlight-bar {
-    height: 10vh;
-  }
-
-  .text-item {
-    font-size: 8vw;  /* Adjusted size */
-    line-height: 7vw;
-    margin-top: 0;
-  }
+/* Shery.js mouse follower customization */
+[data-shery-mouse-follower] {
+    background-color: rgba(42, 75, 141, 0.3);
+    mix-blend-mode: normal;
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .text-structure {
-    margin-top: 5rem;
-    padding: 0 2rem;
-  }
+    .hero-container {
+        padding: 1rem;
+    }
 
-  .highlight-bar {
-    height: 10vh;
-  }
+    .text-item {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+    }
 
-  .text-item {
-    font-size: 6.5vw;  /* Adjusted size */
-    line-height: 6vw;
-    margin-top: 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .text-structure {
-    margin-left: 30px;
-    margin-top: 4rem;
-    padding: 0 1.5rem;
-  }
-
-  .highlight-bar {
-    height: 8vh;
-  }
-
-  .text-item {
-    font-size: 5.5vw;  /* Adjusted size */
-    line-height: 5.5vw;
-    margin-top: 0;
-  }
+    .cta-button.blue-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
 }
