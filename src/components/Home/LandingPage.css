@@ -1,89 +1,37 @@
-/* LandingPage.css */
-.landing-page.white-blue-theme {
-    background-color: #ffffff;
-    color: #2a4b8d;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Inter', 'Arial', sans-serif;
-}
-
-.hero-container {
-    text-align: center;
-    max-width: 1200px;
-    padding: 2rem;
-}
-
-.text-structure {
-    margin-bottom: 3rem;
-}
-
-.masker {
+.canvas-container {
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
 }
 
-.text-wrapper {
-    display: inline-block;
+/* Wrapper ensures overlay can sit above the canvas */
+.canvas-wrap {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #000; /* fallback */
 }
 
-.text-item {
-    font-size: clamp(3rem, 8vw, 7rem);
-    font-weight: 700;
-    margin: 0;
-    line-height: 1.1;
-    color: #2a4b8d;
+/* Canvas area */
+.canvas-container {
+    width: 100%;
+    height: 100%;
 }
 
-.cta-button.blue-btn {
-    display: inline-flex;
+/* Centered overlay text */
+.overlay-title {
+    position: absolute;
+    inset: 0;
+    display: flex;
     align-items: center;
-    background-color: #2a4b8d;
-    color: white;
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    text-decoration: none;
+    justify-content: center;
+    pointer-events: none;          /* clicks pass through to canvas */
+    font-family: 'Poppins', sans-serif; /* clean & minimal */
     font-weight: 600;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    border: 2px solid #2a4b8d;
-    box-shadow: 0 4px 12px rgba(42, 75, 141, 0.2);
-}
-
-.cta-button.blue-btn:hover {
-    background-color: white;
-    color: #2a4b8d;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(42, 75, 141, 0.3);
-}
-
-.arrow {
-    margin-left: 0.5rem;
-    transition: transform 0.3s ease;
-}
-
-.cta-button.blue-btn:hover .arrow {
-    transform: translateX(4px);
-}
-
-/* Shery.js mouse follower customization */
-[data-shery-mouse-follower] {
-    background-color: rgba(42, 75, 141, 0.3);
-    mix-blend-mode: normal;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .hero-container {
-        padding: 1rem;
-    }
-
-    .text-item {
-        font-size: clamp(2.5rem, 10vw, 4rem);
-    }
-
-    .cta-button.blue-btn {
-        padding: 0.8rem 2rem;
-        font-size: 1rem;
-    }
+    font-size: clamp(2rem, 10vw, 10rem);
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    mix-blend-mode: difference;    /* negative/inverted effect */
+    user-select: none;
 }

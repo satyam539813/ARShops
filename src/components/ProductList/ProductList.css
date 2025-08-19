@@ -1,4 +1,6 @@
-
+*{
+  color: white;
+}
 :root{
   --bg: #0b1220;
   --card: #0f172a;

@@ -3,7 +3,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 // import "../../Products/ProductList.css";
 import Help from "./Help";
-const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
+  const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
   const [display, setDisplay] = useState(false);
   const [ARSupported, setARSupported] = useState(false);
   const [annotate, setAnnotate] = useState(false);
