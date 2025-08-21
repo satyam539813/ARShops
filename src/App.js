@@ -1,7 +1,5 @@
-import "./App.css";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Home from "./components/Home/Home";
-import ProductList from "./components/ProductList/ProductList";
+ import { Routes, Route, BrowserRouter } from "react-router-dom";
+ import ProductList from "./components/ProductList/ProductList";
  import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
