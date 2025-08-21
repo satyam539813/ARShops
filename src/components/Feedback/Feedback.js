@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Feedback.css";
 import { motion } from "framer-motion";
-import Shery from "sheryjs";
 
 const Feedback = () => {
   const formRef = useRef(null);
@@ -15,22 +13,13 @@ const Feedback = () => {
     comments: ""
   });
 
-  // Track form completion percentage
   const [completionPercentage, setCompletionPercentage] = useState(0);
 
   useEffect(() => {
-    // Calculate form completion percentage
     const totalFields = Object.keys(formState).length;
     const filledFields = Object.values(formState).filter(value => value.trim() !== "").length;
     setCompletionPercentage(Math.round((filledFields / totalFields) * 100));
-    
-    // Add animation effects from Home page
-    Shery.makeMagnet(".feedback-title", {
-      ease: "cubic-bezier(0.23, 1, 0.320, 1)",
-      duration: 1,
-    });
 
-    // Load necessary scripts
     const script1 = document.createElement("script");
     script1.src = "https://smtpjs.com/v3/smtp.js";
     script1.async = true;
@@ -101,7 +90,6 @@ const Feedback = () => {
       });
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -124,125 +112,155 @@ const Feedback = () => {
   };
 
   return (
-    <motion.div 
-      className="feedback-container"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <div className="feedback-header">
-        <div className="text-wrapper">
-          <h1 className="feedback-title magnet-target">Your Feedback</h1>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 pt-24 pb-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Header */}
+          <motion.div className="text-center mb-12" variants={formVariants}>
+            <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent mb-4">
+              Your Feedback
+            </h1>
+            <div className="w-32 h-1 bg-gradient-to-r from-purple-400 to-blue-400 mx-auto mb-6"></div>
+            <p className="text-xl text-slate-300">Help us evolve with your valuable insights</p>
+          </motion.div>
+
+          {/* Form Container */}
           <motion.div 
-            className="title-underline"
-            initial={{ width: 0 }}
-            animate={{ width: "120px" }}
-            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-          />
-        </div>
-        <p className="feedback-subtitle">Help us evolve with your valuable insights</p>
-      </div>
-
-      <motion.div 
-        className="feedback-form-container"
-        variants={formVariants}
-      >
-        <div className="form-progress">
-          <div className="progress-text">Completion: {completionPercentage}%</div>
-          <div className="progress-bar-container">
-            <motion.div 
-              className="progress-bar" 
-              initial={{ width: "0%" }}
-              animate={{ width: `${completionPercentage}%` }}
-              transition={{ duration: 0.5 }}
-            />
-          </div>
-        </div>
-
-        <form id="feed" ref={formRef} onSubmit={(e) => e.preventDefault()} className="feedback-form">
-          <div className="form-section">
-            <div className="form-group">
-              <label htmlFor="username">Your Name</label>
-              <input 
-                type="text" 
-                id="username" 
-                placeholder="Enter your name"
-                value={formState.username}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="useremail">Your Email</label>
-              <input 
-                type="email" 
-                id="useremail" 
-                placeholder="Enter your email"
-                value={formState.useremail}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="liked">What did you like most about AR-Webstore?</label>
-            <input 
-              type="text" 
-              id="liked" 
-              placeholder="Share what you enjoyed..."
-              value={formState.liked}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="improve">
-              Will our 3D and AR features improve your shopping experience?
-            </label>
-            <input 
-              type="text" 
-              id="improve" 
-              placeholder="Tell us how it might enhance your experience..."
-              value={formState.improve}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="features">
-              What other features would you like to see on AR-Webstore?
-            </label>
-            <input 
-              type="text" 
-              id="features" 
-              placeholder="Share your feature ideas..."
-              value={formState.features}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="comments">Any other comments or suggestions?</label>
-            <textarea
-              id="comments"
-              placeholder="We'd love to hear your thoughts..."
-              value={formState.comments}
-              onChange={handleInputChange}
-            ></textarea>
-          </div>
-
-          <button 
-            type="button" 
-            className={`submit-button ${isSubmitting ? 'submitting' : ''}`} 
-            onClick={sendMail}
-            disabled={isSubmitting}
+            className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8"
+            variants={formVariants}
           >
-            {isSubmitting ? 'Sending...' : 'Submit Feedback'}
-            <span className="button-arrow">→</span>
-          </button>
-        </form>
-      </motion.div>
-    </motion.div>
+            {/* Progress Bar */}
+            <div className="mb-8">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-white font-medium">Completion</span>
+                <span className="text-purple-300 font-bold">{completionPercentage}%</span>
+              </div>
+              <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
+                <motion.div 
+                  className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: `${completionPercentage}%` }}
+                  transition={{ duration: 0.5 }}
+                />
+              </div>
+            </div>
+
+            <form ref={formRef} onSubmit={(e) => e.preventDefault()} className="space-y-6">
+              {/* Personal Info */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="username" className="block text-white font-medium mb-2">
+                    Your Name
+                  </label>
+                  <input 
+                    type="text" 
+                    id="username" 
+                    placeholder="Enter your name"
+                    value={formState.username}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="useremail" className="block text-white font-medium mb-2">
+                    Your Email
+                  </label>
+                  <input 
+                    type="email" 
+                    id="useremail" 
+                    placeholder="Enter your email"
+                    value={formState.useremail}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                  />
+                </div>
+              </div>
+
+              {/* Feedback Questions */}
+              <div>
+                <label htmlFor="liked" className="block text-white font-medium mb-2">
+                  What did you like most about AR-Webstore?
+                </label>
+                <input 
+                  type="text" 
+                  id="liked" 
+                  placeholder="Share what you enjoyed..."
+                  value={formState.liked}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="improve" className="block text-white font-medium mb-2">
+                  Will our 3D and AR features improve your shopping experience?
+                </label>
+                <input 
+                  type="text" 
+                  id="improve" 
+                  placeholder="Tell us how it might enhance your experience..."
+                  value={formState.improve}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="features" className="block text-white font-medium mb-2">
+                  What other features would you like to see on AR-Webstore?
+                </label>
+                <input 
+                  type="text" 
+                  id="features" 
+                  placeholder="Share your feature ideas..."
+                  value={formState.features}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="comments" className="block text-white font-medium mb-2">
+                  Any other comments or suggestions?
+                </label>
+                <textarea
+                  id="comments"
+                  rows={4}
+                  placeholder="We'd love to hear your thoughts..."
+                  value={formState.comments}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 resize-none"
+                ></textarea>
+              </div>
+
+              <button 
+                type="button" 
+                className={`w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold text-lg rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg transform hover:scale-105 flex items-center justify-center space-x-2 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+                onClick={sendMail}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Submit Feedback</span>
+                    <span>→</span>
+                  </>
+                )}
+              </button>
+            </form>
+          </motion.div>
+        </motion.div>
+      </div>
+    </div>
   );
 };
 

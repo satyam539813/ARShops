@@ -1,5 +1,4 @@
 import "./App.css";
-import "@google/model-viewer/dist/model-viewer.min.js";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./components/Home/Home";
 import ProductList from "./components/ProductList/ProductList";
@@ -15,6 +14,11 @@ import About from "./components/About/About";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+// Load model-viewer dynamically
+if (typeof window !== 'undefined' && !customElements.get('model-viewer')) {
+  import('@google/model-viewer/dist/model-viewer.min.js');
+}
 
 const App = () => {
   const [wishlist, setWishlist] = useState([]);

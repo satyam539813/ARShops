@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './PaymentForm.css';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
-    const [paymentMethod, setPaymentMethod] = useState('card'); // 'card', 'netbanking', 'upi', 'cod'
+    const [paymentMethod, setPaymentMethod] = useState('card');
     const [cardDetails, setCardDetails] = useState({
         cardNumber: '',
         cardName: '',
@@ -49,7 +49,7 @@ const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
     };
 
     const validateForm = () => {
-        setError(''); // Clear previous errors
+        setError('');
         if (paymentMethod === 'card') {
             const { cardNumber, cardName, expiryDate, cvc } = cardDetails;
             if (!cardNumber || !cardName || !expiryDate || !cvc) {
@@ -97,9 +97,8 @@ const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
         setLoading(true);
         setError('');
 
-        // Simulate payment processing based on method
         setTimeout(() => {
-            const success = Math.random() > 0.1; // 90% chance of success
+            const success = Math.random() > 0.1;
 
             if (success) {
                 toast.success("Payment successful! Your order has been placed.");
@@ -112,59 +111,62 @@ const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
         }, 2000);
     };
 
+    const paymentMethods = [
+        { value: 'card', label: 'Credit/Debit Card', icon: '💳' },
+        { value: 'netbanking', label: 'Net Banking', icon: '🏦' },
+        { value: 'upi', label: 'UPI', icon: '📱' },
+        { value: 'cod', label: 'Cash on Delivery', icon: '💵' }
+    ];
+
     return (
-        <div className="payment-form-overlay">
-            <div className="payment-form-container">
-                <h3>Choose Payment Method</h3>
-                {error && <p className="payment-error">{error}</p>}
-                <form onSubmit={handleSubmit}>
-                    <div className="payment-method-selection">
-                        <label>
-                            <input
-                                type="radio"
-                                value="card"
-                                checked={paymentMethod === 'card'}
-                                onChange={() => setPaymentMethod('card')}
-                                disabled={loading}
-                            />
-                            Credit/Debit Card
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                value="netbanking"
-                                checked={paymentMethod === 'netbanking'}
-                                onChange={() => setPaymentMethod('netbanking')}
-                                disabled={loading}
-                            />
-                            Net Banking
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                value="upi"
-                                checked={paymentMethod === 'upi'}
-                                onChange={() => setPaymentMethod('upi')}
-                                disabled={loading}
-                            />
-                            UPI
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                value="cod"
-                                checked={paymentMethod === 'cod'}
-                                onChange={() => setPaymentMethod('cod')}
-                                disabled={loading}
-                            />
-                            Cash on Delivery
-                        </label>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <motion.div 
+                className="bg-slate-900/95 backdrop-blur-lg border border-white/10 rounded-2xl p-8 w-full max-w-md max-h-[90vh] overflow-y-auto"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+            >
+                <h3 className="text-2xl font-bold text-white text-center mb-6">Choose Payment Method</h3>
+                
+                {error && (
+                    <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                        <p className="text-red-300 text-center">{error}</p>
+                    </div>
+                )}
+                
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Payment Method Selection */}
+                    <div className="grid grid-cols-2 gap-3">
+                        {paymentMethods.map((method) => (
+                            <label
+                                key={method.value}
+                                className={`flex items-center space-x-3 p-4 border rounded-lg cursor-pointer transition-all duration-300 ${
+                                    paymentMethod === method.value
+                                        ? 'border-purple-500 bg-purple-500/20'
+                                        : 'border-white/20 hover:border-white/40 hover:bg-white/5'
+                                }`}
+                            >
+                                <input
+                                    type="radio"
+                                    value={method.value}
+                                    checked={paymentMethod === method.value}
+                                    onChange={() => setPaymentMethod(method.value)}
+                                    disabled={loading}
+                                    className="sr-only"
+                                />
+                                <span className="text-2xl">{method.icon}</span>
+                                <span className="text-white font-medium text-sm">{method.label}</span>
+                            </label>
+                        ))}
                     </div>
 
+                    {/* Payment Method Forms */}
                     {paymentMethod === 'card' && (
-                        <>
-                            <div className="form-group">
-                                <label htmlFor="cardNumber">Card Number</label>
+                        <div className="space-y-4">
+                            <div>
+                                <label htmlFor="cardNumber" className="block text-white font-medium mb-2">
+                                    Card Number
+                                </label>
                                 <input
                                     type="text"
                                     id="cardNumber"
@@ -174,10 +176,13 @@ const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
                                     placeholder="•••• •••• •••• ••••"
                                     maxLength="16"
                                     disabled={loading}
+                                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="cardName">Cardholder Name</label>
+                            <div>
+                                <label htmlFor="cardName" className="block text-white font-medium mb-2">
+                                    Cardholder Name
+                                </label>
                                 <input
                                     type="text"
                                     id="cardName"
@@ -186,11 +191,14 @@ const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
                                     onChange={handleCardInputChange}
                                     placeholder="Full Name"
                                     disabled={loading}
+                                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                                 />
                             </div>
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label htmlFor="expiryDate">Expiry Date (MM/YY)</label>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label htmlFor="expiryDate" className="block text-white font-medium mb-2">
+                                        Expiry (MM/YY)
+                                    </label>
                                     <input
                                         type="text"
                                         id="expiryDate"
@@ -200,10 +208,13 @@ const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
                                         placeholder="MM/YY"
                                         maxLength="5"
                                         disabled={loading}
+                                        className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                                     />
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="cvc">CVC</label>
+                                <div>
+                                    <label htmlFor="cvc" className="block text-white font-medium mb-2">
+                                        CVC
+                                    </label>
                                     <input
                                         type="text"
                                         id="cvc"
@@ -213,16 +224,19 @@ const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
                                         placeholder="•••"
                                         maxLength="4"
                                         disabled={loading}
+                                        className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                                     />
                                 </div>
                             </div>
-                        </>
+                        </div>
                     )}
 
                     {paymentMethod === 'netbanking' && (
-                        <>
-                            <div className="form-group">
-                                <label htmlFor="bank">Bank Name</label>
+                        <div className="space-y-4">
+                            <div>
+                                <label htmlFor="bank" className="block text-white font-medium mb-2">
+                                    Bank Name
+                                </label>
                                 <input
                                     type="text"
                                     id="bank"
@@ -231,10 +245,13 @@ const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
                                     onChange={handleNetbankingInputChange}
                                     placeholder="e.g., State Bank of India"
                                     disabled={loading}
+                                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="accountNumber">Account Number</label>
+                            <div>
+                                <label htmlFor="accountNumber" className="block text-white font-medium mb-2">
+                                    Account Number
+                                </label>
                                 <input
                                     type="text"
                                     id="accountNumber"
@@ -243,14 +260,17 @@ const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
                                     onChange={handleNetbankingInputChange}
                                     placeholder="Your Account Number"
                                     disabled={loading}
+                                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                                 />
                             </div>
-                        </>
+                        </div>
                     )}
 
                     {paymentMethod === 'upi' && (
-                        <div className="form-group">
-                            <label htmlFor="upiId">UPI ID</label>
+                        <div>
+                            <label htmlFor="upiId" className="block text-white font-medium mb-2">
+                                UPI ID
+                            </label>
                             <input
                                 type="text"
                                 id="upiId"
@@ -259,24 +279,46 @@ const PaymentForm = ({ onPaymentSuccess, onPaymentCancel }) => {
                                 onChange={handleUpiInputChange}
                                 placeholder="yourname@bankupi"
                                 disabled={loading}
+                                className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                             />
                         </div>
                     )}
 
                     {paymentMethod === 'cod' && (
-                        <p className="cod-message">You have selected Cash on Delivery. Please have the exact amount ready upon delivery.</p>
+                        <div className="p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                            <p className="text-green-300 text-center">
+                                You have selected Cash on Delivery. Please have the exact amount ready upon delivery.
+                            </p>
+                        </div>
                     )}
 
-                    <div className="payment-actions">
-                        <button type="button" className="cancel-btn" onClick={onPaymentCancel} disabled={loading}>
+                    {/* Action Buttons */}
+                    <div className="flex space-x-4 pt-4">
+                        <button 
+                            type="button" 
+                            onClick={onPaymentCancel} 
+                            disabled={loading}
+                            className="flex-1 px-6 py-3 border-2 border-white/20 text-white font-medium rounded-lg hover:bg-white/10 hover:border-white/40 transition-all duration-300 disabled:opacity-50"
+                        >
                             Cancel
                         </button>
-                        <button type="submit" className="pay-btn" disabled={loading}>
-                            {loading ? 'Processing...' : 'Confirm Order'}
+                        <button 
+                            type="submit" 
+                            disabled={loading}
+                            className={`flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg flex items-center justify-center ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                        >
+                            {loading ? (
+                                <>
+                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                                    Processing...
+                                </>
+                            ) : (
+                                'Confirm Order'
+                            )}
                         </button>
                     </div>
                 </form>
-            </div>
+            </motion.div>
         </div>
     );
 };

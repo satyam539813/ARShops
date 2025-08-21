@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./SignIn.css";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const SignIn = ({ onSignInSuccess, onAuthError }) => {
     const navigate = useNavigate();
@@ -16,14 +16,12 @@ const SignIn = ({ onSignInSuccess, onAuthError }) => {
             ...signInDetails,
             [e.target.name]: e.target.value
         });
-        // Clear error when user starts typing
         if (error) setError('');
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        // Validate form
         if (!signInDetails.email.trim()) {
             setError('Email is required');
             return;
@@ -36,22 +34,20 @@ const SignIn = ({ onSignInSuccess, onAuthError }) => {
 
         setLoading(true);
 
-        // Retrieve users from local storage
         const users = JSON.parse(localStorage.getItem('users')) || [];
         const foundUser = users.find(user => user.email === signInDetails.email && user.password === signInDetails.password);
 
         setTimeout(() => {
             if (foundUser) {
                 console.log('User signed in:', foundUser);
-                // In a real app, you'd set a session or token here
-                localStorage.setItem('currentUser', JSON.stringify(foundUser)); // Store current logged-in user
+                localStorage.setItem('currentUser', JSON.stringify(foundUser));
                 setSignInDetails({
                     email: '',
                     password: '',
                 });
                 setError('');
-                onSignInSuccess(foundUser); // Call success callback
-                navigate('/product'); // Redirect to product page
+                onSignInSuccess(foundUser);
+                navigate('/product');
             } else {
                 setError('Invalid email or password.');
                 onAuthError('Invalid email or password.');
@@ -61,72 +57,88 @@ const SignIn = ({ onSignInSuccess, onAuthError }) => {
     };
 
     return (
-        <main className="main-sign_in_container">
-            <form onSubmit={handleSubmit} className="sign-in-container">
-                {error && <p className="error-paragraph" style={{color: 'red', textAlign: 'center'}}>{error}</p>}
-                
-                <div className="sign-in-header">
-                    <h3>Welcome back</h3>
-                    <p className="sign-in-subtitle">Sign in to your account</p>
-                </div>
-                
-                {/* <div className="social-signin">
-                    <button type="button" className="social-button" aria-label="Sign in with Google">
-                        G
-                    </button>
-                    <button type="button" className="social-button" aria-label="Sign in with Facebook">
-                        f
-                    </button>
-                    <button type="button" className="social-button" aria-label="Sign in with Apple">
-                        ⌘
-                    </button>
-                </div>
-                
-                <div className="sign-in-divider">
-                    <span>or continue with email</span>
-                </div> */}
-                
-                <div className="input-div">
-                    <label htmlFor="email">Email address</label>
-                    <input 
-                        name="email" 
-                        id="email" 
-                        type="email"
-                        placeholder="your@email.com" 
-                        onChange={handleOnchange}
-                        value={signInDetails.email}
-                        autoComplete="email"
-                    />
-                </div>
-                
-                <div className="input-div">
-                    <label htmlFor="password">Password</label>
-                    <div className="password-container">
-                        <input 
-                            name="password" 
-                            id="password" 
-                            type="password"
-                            placeholder="••••••••" 
-                            onChange={handleOnchange}
-                            value={signInDetails.password}
-                            autoComplete="current-password"
-                        />
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center px-4 py-12">
+            <motion.div
+                className="w-full max-w-md"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+            >
+                <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8">
+                    {/* Header */}
+                    <div className="text-center mb-8">
+                        <h3 className="text-3xl font-bold text-white mb-2">Welcome back</h3>
+                        <p className="text-slate-300">Sign in to your account</p>
                     </div>
-                    <Link to="#" className="forgot-pass">Forgot password?</Link>
+                    
+                    {/* Error Message */}
+                    {error && (
+                        <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                            <p className="text-red-300 text-center">{error}</p>
+                        </div>
+                    )}
+                    
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div>
+                            <label htmlFor="email" className="block text-white font-medium mb-2">
+                                Email address
+                            </label>
+                            <input 
+                                name="email" 
+                                id="email" 
+                                type="email"
+                                placeholder="your@email.com" 
+                                onChange={handleOnchange}
+                                value={signInDetails.email}
+                                autoComplete="email"
+                                className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label htmlFor="password" className="block text-white font-medium mb-2">
+                                Password
+                            </label>
+                            <input 
+                                name="password" 
+                                id="password" 
+                                type="password"
+                                placeholder="••••••••" 
+                                onChange={handleOnchange}
+                                value={signInDetails.password}
+                                autoComplete="current-password"
+                                className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                            />
+                            <Link to="#" className="inline-block mt-2 text-purple-300 hover:text-purple-200 text-sm transition-colors duration-300">
+                                Forgot password?
+                            </Link>
+                        </div>
+                        
+                        <button 
+                            type="submit"
+                            className={`w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold text-lg rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg transform hover:scale-105 flex items-center justify-center ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <>
+                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                                    Signing in...
+                                </>
+                            ) : (
+                                'Sign in'
+                            )}
+                        </button>
+                        
+                        <p className="text-center text-slate-300">
+                            Don't have an account?{' '}
+                            <Link to="/sign-up" className="text-purple-300 hover:text-purple-200 font-medium transition-colors duration-300">
+                                Create account
+                            </Link>
+                        </p>
+                    </form>
                 </div>
-                
-                <button 
-                    className="sign-in-button"
-                    disabled={loading}
-                >
-                    {loading ? 'Signing in...' : 'Sign in'}
-                </button>
-                
-                <p className="sign-in-redirect-p">
-                    Don't have an account? <Link to="/sign-up">Create account</Link>
-                </p>
-            </form>
-        </main>
+            </motion.div>
+        </div>
     );
 };
 
