@@ -6,7 +6,7 @@ COPY public/ /ar-webstore/public
 COPY src/ /ar-webstore/src
 COPY package.json /ar-webstore/
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 CMD ["npm", "start"]
 
